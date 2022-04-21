@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
               color: AppColors.primary,
             ),
             Positioned(
-              top: 40,
+              top: 80,
               left: 0,
               right: 0,
               child: Image.asset(
@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Positioned(
-              bottom: size.height * 0.05,
+              bottom: size.height * 0.12,
               left: 0,
               right: 0,
               child: Column(
