@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:payflow/modules/insert_boleto/insert_boleto_controller.dart';
+import 'package:payflow/shared/models/user_model.dart';
 import 'package:payflow/shared/themes/app_colors.dart';
 import 'package:payflow/shared/themes/app_text_styles.dart';
 import 'package:payflow/shared/widgets/input_text/input_text_widget.dart';
@@ -9,7 +10,8 @@ import 'package:payflow/shared/widgets/set_label_buttons/set_label_buttons.dart'
 
 class InsertBoletoPage extends StatefulWidget {
   final String? barcode;
-  const InsertBoletoPage({Key? key, this.barcode}) : super(key: key);
+  final UserModel user;
+  const InsertBoletoPage({Key? key, this.barcode, required this.user}) : super(key: key);
 
   @override
   _InsertBoletoPageState createState() => _InsertBoletoPageState();
@@ -22,7 +24,6 @@ class _InsertBoletoPageState extends State<InsertBoletoPage> {
     leftSymbol: "R\$",
     decimalSeparator: ",",
   );
-
   final dueDateInputTextController = MaskedTextController(mask: "00/00/0000");
   final barcodeInputTextController = TextEditingController();
 
@@ -79,6 +80,7 @@ class _InsertBoletoPageState extends State<InsertBoletoPage> {
                         onChanged: (value) {
                           controller.onChange(dueDate: value);
                         },
+                        keyboardType: TextInputType.datetime,
                       ),
                       InputTextWidget(
                         controller: moneyInputTextController,
@@ -90,6 +92,7 @@ class _InsertBoletoPageState extends State<InsertBoletoPage> {
                           controller.onChange(
                               value: moneyInputTextController.numberValue);
                         },
+                        keyboardType: TextInputType.number,
                       ),
                       InputTextWidget(
                         controller: barcodeInputTextController,
@@ -115,7 +118,8 @@ class _InsertBoletoPageState extends State<InsertBoletoPage> {
         secondaryLabel: "Cadastrar",
         secondaryOnPressed: () async {
           await controller.cadastrarBoleto();
-          Navigator.pushNamed(context, "/home");
+          if(controller.verification == true)
+            Navigator.pushReplacementNamed(context, "/home", arguments: widget.user);
         },
       ),
     );

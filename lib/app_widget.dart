@@ -33,7 +33,7 @@ class AppWidget extends StatelessWidget {
         "/login": (context) => LoginPage(),
         "/home": (context) => HomePage(user: ModalRoute.of(context)!.settings.arguments as UserModel),
         "/barcode_scanner": (context) => BarcodeScannerPage(),
-        "/insert_boleto": (context) => InsertBoletoPage(barcode: ModalRoute.of(context) != null ? ModalRoute.of(context)!.settings.arguments.toString() : null),
+        "/insert_boleto": (context) => InsertBoletoPage(user: ModalRoute.of(context)!.settings.arguments as UserModel),
       }
     );
   }
